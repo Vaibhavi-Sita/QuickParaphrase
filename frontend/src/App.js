@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import Slider from '@mui/material/Slider'
+import CircularProgress from '@mui/material/CircularProgress'
 import './App.css'
 
 function App() {
@@ -30,23 +31,17 @@ function App() {
 
     try {
       const response = await axios.post(
-        'https://api.deepseek.com/v1/paraphrase',
+        `${process.env.REACT_APP_API_URL}/api/paraphrase`,
         {
           text: inputText,
           mode: mode,
-          synonyms_level: synonymsLevel,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${process.env.REACT_APP_DEEPSEEK_API_KEY}`,
-            'Content-Type': 'application/json',
-          },
+          synonymsLevel: synonymsLevel, // Match backend DTO field name
         }
       )
 
-      setOutputText(response.data.result)
+      setOutputText(response.data)
     } catch (err) {
-      setError('Error paraphrasing text. Please try again.')
+      setError(err.response?.data || 'Error paraphrasing text')
     } finally {
       setIsLoading(false)
     }
@@ -54,58 +49,79 @@ function App() {
 
   return (
     <div className='container'>
-      <h1>DeepSeek Paraphraser</h1>
+      <h1>AI Paraphraser</h1>
 
       <div className='controls'>
-        <select
-          value={mode}
-          onChange={(e) => setMode(e.target.value)}
-          className='mode-select'
-        >
-          {modes.map((mode) => (
-            <option key={mode} value={mode}>
-              {mode.charAt(0).toUpperCase() + mode.slice(1)}
-            </option>
-          ))}
-        </select>
+        <div className='control-group'>
+          <label>Mode:</label>
+          <select
+            value={mode}
+            onChange={(e) => setMode(e.target.value)}
+            className='mode-select'
+          >
+            {modes.map((mode) => (
+              <option key={mode} value={mode}>
+                {mode.charAt(0).toUpperCase() + mode.slice(1)}
+              </option>
+            ))}
+          </select>
+        </div>
 
-        <div className='slider-container'>
-          <label>Synonyms Level: {synonymsLevel}</label>
-          <Slider
-            value={synonymsLevel}
-            min={1}
-            max={5}
-            onChange={(e, value) => setSynonymsLevel(value)}
-            className='synonyms-slider'
-          />
+        <div className='control-group'>
+          <label>Synonyms Intensity:</label>
+          <div className='slider-container'>
+            <Slider
+              value={synonymsLevel}
+              min={1}
+              max={5}
+              onChange={(e, value) => setSynonymsLevel(value)}
+              valueLabelDisplay='auto'
+              marks={[
+                { value: 1, label: 'Low' },
+                { value: 3, label: 'Medium' },
+                { value: 5, label: 'High' },
+              ]}
+            />
+          </div>
         </div>
       </div>
 
       <div className='text-container'>
-        <textarea
-          value={inputText}
-          onChange={(e) => setInputText(e.target.value)}
-          placeholder='Enter text to paraphrase...'
-          className='text-area'
-        />
+        <div className='input-section'>
+          <textarea
+            value={inputText}
+            onChange={(e) => setInputText(e.target.value)}
+            placeholder='Enter text to paraphrase...'
+            className='text-area'
+            rows={8}
+          />
+          <button
+            onClick={handleParaphrase}
+            disabled={isLoading || !inputText.trim()}
+            className='paraphrase-btn'
+          >
+            {isLoading ? <CircularProgress size={24} /> : 'Paraphrase'}
+          </button>
+        </div>
 
-        <div className='output-area'>
-          {isLoading ? (
-            <div className='loader'>Processing...</div>
-          ) : (
-            outputText || 'Paraphrased text will appear here'
-          )}
-          {error && <div className='error'>{error}</div>}
+        <div className='output-section'>
+          <div className='output-content'>
+            {isLoading ? (
+              <div className='loading-overlay'>
+                <CircularProgress />
+                <p>Rewriting text...</p>
+              </div>
+            ) : (
+              outputText || (
+                <div className='placeholder'>
+                  Your paraphrased text will appear here
+                </div>
+              )
+            )}
+            {error && <div className='error-message'>{error}</div>}
+          </div>
         </div>
       </div>
-
-      <button
-        onClick={handleParaphrase}
-        disabled={isLoading}
-        className='paraphrase-btn'
-      >
-        Paraphrase Now
-      </button>
     </div>
   )
 }

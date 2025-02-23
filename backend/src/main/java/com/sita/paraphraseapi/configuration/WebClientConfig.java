@@ -14,9 +14,9 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class WebClientConfig {
 
     @Bean
-    public WebClient deepSeekWebClient(
-            @Value("${deepseek.api.url}") String apiUrl,
-            @Value("${deepseek.api.key}") String apiKey
+    public WebClient aiWebClient(
+            @Value("${ai.api.url}") String apiUrl,
+            @Value("${ai.api.key}") String apiKey
     ) {
         return WebClient.builder()
                 .baseUrl(apiUrl)
