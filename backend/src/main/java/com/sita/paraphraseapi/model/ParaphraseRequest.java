@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class ParaphraseRequest {
+
     public String getText() {
         return text;
     }

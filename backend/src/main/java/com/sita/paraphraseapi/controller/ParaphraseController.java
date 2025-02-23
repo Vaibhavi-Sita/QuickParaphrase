@@ -11,10 +11,12 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping("/api/paraphrase")
 
-@CrossOrigin(origins = {
-        "http://localhost:3000",
-        "https://to-be-updated-by-sita.com",
-})
+
+@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = {
+//        "http://localhost:3000",
+//        "https://to-be-updated-by-sita.com",
+//})
 public class ParaphraseController {
 
     private final ParaphraseService paraphraseService;

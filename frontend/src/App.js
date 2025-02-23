@@ -1,10 +1,17 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import Slider from '@mui/material/Slider'
-import CircularProgress from '@mui/material/CircularProgress'
+import {
+  Slider,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  CircularProgress,
+} from '@mui/material'
+import { FiArrowRight } from 'react-icons/fi'
 import './App.css'
 
-function App() {
+const App = () => {
   const [inputText, setInputText] = useState('')
   const [outputText, setOutputText] = useState('')
   const [mode, setMode] = useState('standard')
@@ -13,18 +20,21 @@ function App() {
   const [error, setError] = useState('')
 
   const modes = [
-    'standard',
-    'fluency',
-    'humanize',
-    'formal',
-    'academic',
-    'simple',
-    'creative',
+    { value: 'standard', label: 'Standard' },
+    { value: 'fluency', label: 'Fluency' },
+    { value: 'humanize', label: 'Humanize' },
+    { value: 'formal', label: 'Formal' },
+    { value: 'academic', label: 'Academic' },
+    { value: 'simple', label: 'Simple' },
+    { value: 'creative', label: 'Creative' },
   ]
 
   const handleParaphrase = async (e) => {
     e.preventDefault()
-    if (!inputText.trim()) return
+    if (!inputText.trim()) {
+      setError('Please enter some text to paraphrase')
+      return
+    }
 
     setIsLoading(true)
     setError('')
@@ -35,54 +45,66 @@ function App() {
         {
           text: inputText,
           mode: mode,
-          synonymsLevel: synonymsLevel, // Match backend DTO field name
+          synonymsLevel: synonymsLevel,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
       )
 
       setOutputText(response.data)
     } catch (err) {
-      setError(err.response?.data || 'Error paraphrasing text')
+      setError(
+        err.response?.data?.message ||
+          'Failed to paraphrase text. Please try again.'
+      )
     } finally {
       setIsLoading(false)
     }
   }
 
   return (
-    <div className='container'>
-      <h1>AI Paraphraser</h1>
+    <div className='app-container'>
+      <header className='app-header'>
+        <h1>AI Paraphraser</h1>
+        <p>Transform your text using advanced AI rewriting</p>
+      </header>
 
-      <div className='controls'>
-        <div className='control-group'>
-          <label>Mode:</label>
-          <select
+      <div className='controls-container'>
+        <FormControl fullWidth className='mode-select'>
+          <InputLabel>Paraphrasing Mode</InputLabel>
+          <Select
             value={mode}
+            label='Paraphrasing Mode'
             onChange={(e) => setMode(e.target.value)}
-            className='mode-select'
           >
             {modes.map((mode) => (
-              <option key={mode} value={mode}>
-                {mode.charAt(0).toUpperCase() + mode.slice(1)}
-              </option>
+              <MenuItem key={mode.value} value={mode.value}>
+                {mode.label}
+              </MenuItem>
             ))}
-          </select>
-        </div>
+          </Select>
+        </FormControl>
 
-        <div className='control-group'>
-          <label>Synonyms Intensity:</label>
-          <div className='slider-container'>
-            <Slider
-              value={synonymsLevel}
-              min={1}
-              max={5}
-              onChange={(e, value) => setSynonymsLevel(value)}
-              valueLabelDisplay='auto'
-              marks={[
-                { value: 1, label: 'Low' },
-                { value: 3, label: 'Medium' },
-                { value: 5, label: 'High' },
-              ]}
-            />
-          </div>
+        <div className='slider-container'>
+          <label>Synonyms Intensity (Level {synonymsLevel})</label>
+          <Slider
+            value={synonymsLevel}
+            min={1}
+            max={5}
+            step={1}
+            marks={[
+              { value: 1, label: 'Low' },
+              { value: 2, label: '' },
+              { value: 3, label: 'Medium' },
+              { value: 4, label: '' },
+              { value: 5, label: 'High' },
+            ]}
+            onChange={(e, value) => setSynonymsLevel(value)}
+            valueLabelDisplay='auto'
+          />
         </div>
       </div>
 
@@ -93,14 +115,21 @@ function App() {
             onChange={(e) => setInputText(e.target.value)}
             placeholder='Enter text to paraphrase...'
             className='text-area'
-            rows={8}
+            disabled={isLoading}
           />
           <button
             onClick={handleParaphrase}
             disabled={isLoading || !inputText.trim()}
-            className='paraphrase-btn'
+            className='paraphrase-button'
           >
-            {isLoading ? <CircularProgress size={24} /> : 'Paraphrase'}
+            {isLoading ? (
+              <CircularProgress size={24} color='inherit' />
+            ) : (
+              <>
+                Paraphrase Now
+                <FiArrowRight className='arrow-icon' />
+              </>
+            )}
           </button>
         </div>
 
@@ -108,8 +137,8 @@ function App() {
           <div className='output-content'>
             {isLoading ? (
               <div className='loading-overlay'>
-                <CircularProgress />
-                <p>Rewriting text...</p>
+                <CircularProgress size={40} />
+                <p>Rewriting your text...</p>
               </div>
             ) : (
               outputText || (

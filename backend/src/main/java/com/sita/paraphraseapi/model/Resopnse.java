@@ -1,16 +1,150 @@
 package com.sita.paraphraseapi.model;
 
 import lombok.Data;
+import java.util.List;
 
 @Data
 public class Resopnse {
-    public String getResult() {
-        return result;
+    private String id;
+
+    public String getId() {
+        return id;
     }
 
-    public void setResult(String result) {
-        this.result = result;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    private String result;
+    public String getObject() {
+        return object;
+    }
+
+    public void setObject(String object) {
+        this.object = object;
+    }
+
+    public long getCreated() {
+        return created;
+    }
+
+    public void setCreated(long created) {
+        this.created = created;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public Usage getUsage() {
+        return usage;
+    }
+
+    public void setUsage(Usage usage) {
+        this.usage = usage;
+    }
+
+    public List<Choice> getChoices() {
+        return choices;
+    }
+
+    public void setChoices(List<Choice> choices) {
+        this.choices = choices;
+    }
+
+    private String object;
+    private long created;
+    private String model;
+    private Usage usage;
+    private List<Choice> choices;
+
+    @Data
+    public static class Choice {
+        private int index;
+
+        public int getIndex() {
+            return index;
+        }
+
+        public void setIndex(int index) {
+            this.index = index;
+        }
+
+        public Message getMessage() {
+            return message;
+        }
+
+        public void setMessage(Message message) {
+            this.message = message;
+        }
+
+        public String getFinish_reason() {
+            return finish_reason;
+        }
+
+        public void setFinish_reason(String finish_reason) {
+            this.finish_reason = finish_reason;
+        }
+
+        private Message message;
+        private String finish_reason;
+    }
+
+    @Data
+    public static class Message {
+        private String role;
+
+        public String getRole() {
+            return role;
+        }
+
+        public void setRole(String role) {
+            this.role = role;
+        }
+
+        public String getContent() {
+            return content;
+        }
+
+        public void setContent(String content) {
+            this.content = content;
+        }
+
+        private String content;
+    }
+
+    @Data
+    public static class Usage {
+        private int prompt_tokens;
+
+        public int getPrompt_tokens() {
+            return prompt_tokens;
+        }
+
+        public void setPrompt_tokens(int prompt_tokens) {
+            this.prompt_tokens = prompt_tokens;
+        }
+
+        public int getCompletion_tokens() {
+            return completion_tokens;
+        }
+
+        public void setCompletion_tokens(int completion_tokens) {
+            this.completion_tokens = completion_tokens;
+        }
+
+        public int getTotal_tokens() {
+            return total_tokens;
+        }
+
+        public void setTotal_tokens(int total_tokens) {
+            this.total_tokens = total_tokens;
+        }
+
+        private int completion_tokens;
+        private int total_tokens;
+    }
 }
