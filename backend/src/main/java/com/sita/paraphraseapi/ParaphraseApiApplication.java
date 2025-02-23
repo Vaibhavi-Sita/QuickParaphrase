@@ -1,4 +1,4 @@
-package com.sita.paraphrase_api;
+package com.sita.paraphraseapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

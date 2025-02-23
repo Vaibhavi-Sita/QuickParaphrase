@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: paraphrase-api
+    runtime: java
+    buildCommand: ./mvnw clean package
+    startCommand: java -jar target/paraphrase-api-*.jar
+    env:
+      - key: DEEPSEEK_API_KEY
+        value: your-api-key-here
+      - key: JAVA_VERSION
+        value: 17
