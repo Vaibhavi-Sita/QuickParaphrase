@@ -1,132 +1,166 @@
+/* App.css */
 :root {
-  --primary-color: #3f51b5;
-  --secondary-color: #4caf50;
-  --background-color: #f5f7fb;
-  --text-color: #2d3748;
-  --error-color: #e53e3e;
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+  --pastel-yellow: #fff9c4;
+  --pastel-pink: #ffcdd2;
+  --soft-white: #fffafa;
+  --dark-text: #2d3436;
+  --subtle-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  --border-radius: 12px;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: var(--background-color);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell;
+  background: linear-gradient(
+    135deg,
+    var(--pastel-yellow) 0%,
+    var(--pastel-pink) 100%
+  );
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  overflow: hidden;
 }
 
 .app-container {
   max-width: 1200px;
   margin: 2rem auto;
   padding: 2rem;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding-top: 1rem;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: var(--border-radius);
+  box-shadow: var(--subtle-shadow);
+  backdrop-filter: blur(10px);
+  height: calc(100vh - 4rem);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .app-header {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   padding-bottom: 2rem;
-  border-bottom: 2px solid #eee;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  max-height: 100px;
 }
 
 .app-header h1 {
-  color: var(--primary-color);
+  color: var(--dark-text);
   font-size: 2.5rem;
-  margin-bottom: 0.5rem;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  margin-bottom: 0.1rem;
 }
 
 .app-header p {
-  color: #718096;
+  color: #636e72;
   font-size: 1.1rem;
+  font-weight: 300;
 }
 
 .controls-container {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
-  margin-bottom: 2rem;
-  background: #f8f9fa;
-  padding: 1.5rem;
-  border-radius: 8px;
+  margin-bottom: 1rem;
 }
 
-.mode-select {
-  background: white;
+.mode-select .MuiOutlinedInput-root {
+  border-radius: 8px;
+  transition: var(--transition);
+  margin-top: 1rem;
+}
+
+.mode-select .MuiSelect-select {
+  padding: 12px 14px;
 }
 
 .slider-container {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  padding: 1rem;
+  background: var(--soft-white);
+  border-radius: var(--border-radius);
 }
 
-.slider-container label {
+.slider-container .MuiSlider-root {
+  color: var(--pastel-pink);
+}
+
+.slider-container .MuiSlider-markLabel {
   font-weight: 500;
-  color: var(--text-color);
+  color: var(--dark-text);
 }
 
 .text-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
-  min-height: 400px;
+  flex: 1;
+  overflow: hidden;
+}
+
+.input-section,
+.output-section {
+  display: flex;
+  flex-direction: column;
+  height: 90%;
+}
+
+.input-section p,
+.output-section p {
+  color: #636e72;
+  font-size: 1.1rem;
+  font-weight: 300;
+  margin-left: 1.5rem;
 }
 
 .text-area,
 .output-content {
-  width: 100%;
-  height: 100%;
+  flex: 1;
   padding: 1.5rem;
-  border: 2px solid #e2e8f0;
-  border-radius: 8px;
+  border: 2px solid rgba(0, 0, 0, 0.05);
+  border-radius: var(--border-radius);
   font-size: 1rem;
   line-height: 1.6;
   resize: none;
-  transition: border-color 0.3s ease;
+  background: var(--soft-white);
+  transition: var(--transition);
+  overflow-y: auto;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell;
 }
 
 .text-area:focus {
-  border-color: var(--primary-color);
+  border-color: var(--pastel-pink);
   outline: none;
-}
-
-.output-content {
-  background: #f8fafc;
-  position: relative;
-  overflow-y: auto;
+  box-shadow: 0 0 0 3px rgba(255, 205, 210, 0.3);
 }
 
 .paraphrase-button {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  margin-top: 1rem;
-  padding: 1rem 2rem;
-  background: var(--primary-color);
-  color: white;
+  gap: 0.8rem;
+  margin: 1.5rem auto;
+  padding: 1rem 2.5rem;
+  background: linear-gradient(
+    135deg,
+    var(--pastel-pink) 0%,
+    var(--pastel-yellow) 100%
+  );
+  color: var(--dark-text);
   border: none;
-  border-radius: 6px;
-  font-size: 1rem;
+  border-radius: 30px;
+  font-size: 1.1rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: var(--transition);
+  box-shadow: var(--subtle-shadow);
 }
 
 .paraphrase-button:hover:not(:disabled) {
-  background: #303f9f;
-  transform: translateY(-1px);
-}
-
-.paraphrase-button:disabled {
-  background: #a0aec0;
-  cursor: not-allowed;
-}
-
-.arrow-icon {
-  margin-left: 0.5rem;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
 .loading-overlay {
@@ -140,33 +174,35 @@ body {
   align-items: center;
   justify-content: center;
   background: rgba(255, 255, 255, 0.9);
-  gap: 1rem;
+  border-radius: var(--border-radius);
 }
 
 .error-message {
-  color: var(--error-color);
-  background: #fff5f5;
+  color: #e74c3c;
+  background: #ffe6e6;
   padding: 1rem;
-  border-radius: 6px;
+  border-radius: 8px;
   margin-top: 1rem;
-  border: 1px solid #fed7d7;
+  border: 1px solid #ffcccc;
 }
 
 .placeholder {
-  color: #a0aec0;
-  font-style: italic;
+  color: #b2bec3;
+  font-weight: 300;
+  text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell;
 }
 
 @media (max-width: 768px) {
-  .app-container {
-    padding: 1rem;
-  }
-
   .controls-container {
     grid-template-columns: 1fr;
   }
-
   .text-container {
     grid-template-columns: 1fr;
+  }
+  .paraphrase-button {
+    width: 100%;
+    justify-content: center;
   }
 }
