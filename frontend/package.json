@@ -1,4 +1,5 @@
 {
+  "homepage": "https://vaibhavi-sita.github.io/pwa-app",
   "name": "quick-paraphrase",
   "version": "0.1.0",
   "private": true,
@@ -12,6 +13,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.7.9",
     "dotenv": "^16.4.7",
+    "gh-pages": "^6.3.0",
     "http-proxy-middleware": "^3.0.3",
     "quick-paraphrase": "file:",
     "react": "^19.0.0",
@@ -23,8 +25,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [

@@ -63,9 +63,13 @@ const Paraphrase = () => {
 
   return (
     <div className='app-container'>
-      <header className='app-header'>
-        <h1>Quick Paraphrase</h1>
-        <p>Transform your text using advanced AI rewriting</p>
+      <header className='app-header-container'>
+        <div className='image-hover' />
+        <header className='app-header'>
+          <h1>Quick Paraphrase</h1>
+          <p>Transform your text using advanced AI rewriting</p>
+        </header>
+        <div></div>
       </header>
 
       <div className='controls-container'>
