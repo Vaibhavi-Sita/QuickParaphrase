@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "public/static/css/main.d2709d8c.css",
+    "main.js": "public/static/js/main.b1431c81.js",
+    "static/js/453.971135f9.chunk.js": "public/static/js/453.971135f9.chunk.js",
+    "static/media/woof-woof.png": "public/static/media/woof-woof.aa678bd7f705d77afc8e.png",
+    "static/media/junior-speech.png": "public/static/media/junior-speech.a6a440185fdc5d6c882f.png",
+    "index.html": "public/index.html",
+    "main.d2709d8c.css.map": "public/static/css/main.d2709d8c.css.map",
+    "main.b1431c81.js.map": "public/static/js/main.b1431c81.js.map",
+    "453.971135f9.chunk.js.map": "public/static/js/453.971135f9.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d2709d8c.css",
+    "static/js/main.b1431c81.js"
+  ]
+}
